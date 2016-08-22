@@ -1,0 +1,7 @@
+[Tt]humbs.db
+*.DS_Store
+
+[Bb]in
+[Bb]uild/
+[Dd]ebug*/
+[Rr]elease*/
