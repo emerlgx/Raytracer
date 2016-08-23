@@ -39,25 +39,33 @@ namespace Raytracer
 		// if no object is hit, draw a gradient
 		static Vector3 color(Ray r) {
 			// see if an object is hit
-			if (hit_sphere (new Vector3 (0.0f, 0.0f, -1.0f), 0.5f, r)) {
-				return (new Vector3 (1.0f, 0.0f, 0.0f));
+			float t = hit_sphere (new Vector3 (0.0f, 0.0f, -1.0f), 0.5f, r);
+			if (t > 0.0f) {
+				// shade the indicated point on the sphere
+				Vector3 N = (r.point (t) - new Vector3 (0.0f, 0.0f, -1.0f)).unit_vector();
+				return (new Vector3 (N.x () + 1.0f, N.y () + 1.0f, N.z () + 1.0f)) * 0.5f;
 			}
 
 			// no object hit, draw the background
 			Vector3 unit_dir = r.direction().unit_vector();
-			float t = 0.5f * (unit_dir.y () + 1.0f);
+			t = 0.5f * (unit_dir.y () + 1.0f);
 			return (new Vector3 (1.0f, 1.0f, 1.0f)) * (1.0f - t) + (new Vector3 (0.5f, 0.7f, 1.0f) * t);
 
 		}
 
 		// detect if a specified sphere is hit
-		static bool hit_sphere(Vector3 center, float radius, Ray r) {
+		static float hit_sphere(Vector3 center, float radius, Ray r) {
 			Vector3 oc = r.origin () - center;
 			float a = Vector3.dot (r.direction (), r.direction ());
 			float b = 2.0f * Vector3.dot (oc, r.direction ());
 			float c = Vector3.dot (oc, oc) - radius*radius;
 			float discriminant = b * b - 4 * a * c;
-			return (discriminant > 0.0f);
+
+			if (discriminant < 0.0f) {
+				return -1.0f;
+			} else {
+				return (float)((-b - Math.Sqrt (discriminant)) / (2.0f * a));
+			}
 		}
 	}
 }
