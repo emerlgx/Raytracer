@@ -19,13 +19,19 @@ namespace Raytracer
 			Vector3 vertical = new Vector3 (0.0f, 2.0f, 0.0f);
 			Vector3 origin = new Vector3 (0.0f, 0.0f, 0.0f);
 
+			// create the world
+			Hitable_List world = new Hitable_List ();
+			world.hitables.Add (new Sphere (new Vector3 (0.0f, 0.0f, -1.0f), 0.5f));
+			world.hitables.Add (new Sphere (new Vector3 (0.0f, -100.5f, -1.0f), 100.0f));
+
 			for (int i = ny-1; i >= 0; i--) {
 				for (int j = 0; j < nx; j++) {
 					float u = (float)j / (float)nx;
 					float v = (float)i / (float)ny;
 
 					Ray r = new Ray (origin, lower_left + horizontal * u + vertical * v);
-					Vector3 col = color (r);
+					Vector3 p = r.point (2.0f);
+					Vector3 col = color (r, world);
 
 					// values written to file
 					int ir = (int)(255.99f * col.r());
@@ -37,34 +43,19 @@ namespace Raytracer
 		}
 
 		// if no object is hit, draw a gradient
-		static Vector3 color(Ray r) {
+		static Vector3 color(Ray r, Hitable world) {
+			hit_record rec = new hit_record();
+
 			// see if an object is hit
-			float t = hit_sphere (new Vector3 (0.0f, 0.0f, -1.0f), 0.5f, r);
-			if (t > 0.0f) {
-				// shade the indicated point on the sphere
-				Vector3 N = (r.point (t) - new Vector3 (0.0f, 0.0f, -1.0f)).unit_vector();
-				return (new Vector3 (N.x () + 1.0f, N.y () + 1.0f, N.z () + 1.0f)) * 0.5f;
-			}
-
-			// no object hit, draw the background
-			Vector3 unit_dir = r.direction().unit_vector();
-			t = 0.5f * (unit_dir.y () + 1.0f);
-			return (new Vector3 (1.0f, 1.0f, 1.0f)) * (1.0f - t) + (new Vector3 (0.5f, 0.7f, 1.0f) * t);
-
-		}
-
-		// detect if a specified sphere is hit
-		static float hit_sphere(Vector3 center, float radius, Ray r) {
-			Vector3 oc = r.origin () - center;
-			float a = Vector3.dot (r.direction (), r.direction ());
-			float b = 2.0f * Vector3.dot (oc, r.direction ());
-			float c = Vector3.dot (oc, oc) - radius*radius;
-			float discriminant = b * b - 4 * a * c;
-
-			if (discriminant < 0.0f) {
-				return -1.0f;
+			if (world.hit(r, 0.0f, float.MaxValue, ref rec)) {
+				// shade the indicated point
+				return (new Vector3 (rec.normal.x () + 1.0f, rec.normal.y () + 1.0f, rec.normal.z () + 1.0f)) * 0.5f;
 			} else {
-				return (float)((-b - Math.Sqrt (discriminant)) / (2.0f * a));
+				// no object hit, draw the background
+				Vector3 unit_dir = r.direction().unit_vector();
+				float t = 0.5f * (unit_dir.y () + 1.0f);
+				return (new Vector3 (1.0f, 1.0f, 1.0f)) * (1.0f - t) + (new Vector3 (0.5f, 0.7f, 1.0f) * t);
+			
 			}
 		}
 	}
