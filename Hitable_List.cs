@@ -14,7 +14,7 @@ namespace Raytracer
 		}
 
 		public override bool hit(Ray r, float t_min, float t_max, ref hit_record rec) {
-			hit_record temp_rec = rec;
+			hit_record temp_rec = new hit_record();
 			bool hit_anything = false;
 			double closest = t_max;
 
