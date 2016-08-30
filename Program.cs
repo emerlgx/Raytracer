@@ -9,6 +9,7 @@ namespace Raytracer
 		static int nx = 200;
 		static int ny = 100;
 		static int ns = 100;
+		static Random rnd;
 
 		public static void Main (string[] args)
 		{
@@ -17,28 +18,33 @@ namespace Raytracer
 
 			// create the world
 			Hitable_List world = new Hitable_List ();
-			world.hitables.Add (new Sphere (new Vector3 (0.0f, 0.0f, -1.0f), 0.5f));
 			world.hitables.Add (new Sphere (new Vector3 (0.0f, -100.5f, -1.0f), 100.0f));
+			world.hitables.Add (new Sphere (new Vector3 (0.0f, 0.0f, -1.0f), 0.5f));
+
 
 			// init the camera
 			Camera cam = new Camera ();
+
+			rnd = new Random ();
 
 			for (int i = ny-1; i >= 0; i--) {
 				for (int j = 0; j < nx; j++) {
 
 					// supersampling for antialiasing
-					Random rnd = new Random ();
 					Vector3 col = new Vector3 ();
 					for (int s = 0; s < ns; s++) {
-						float u = ((float)j + (float)rnd.NextDouble()) / (float)nx;
-						float v = ((float)i + (float)rnd.NextDouble()) / (float)ny;
+						float u = (float)(j + rnd.NextDouble()) / (float)nx;
+						float v = (float)(i + rnd.NextDouble()) / (float)ny;
 						
 						Ray r = cam.getRay(u,v);
-						Vector3 p = r.point (2.0f);
 						col += color (r, world);
 					}
 
 					col /= (float)ns;
+					// gamma correction
+					col = new Vector3 ((float)Math.Sqrt (col.x ()), 
+					                   (float)Math.Sqrt (col.y ()), 
+					                   (float)Math.Sqrt (col.z ()));
 					// values written to file
 					int ir = (int)(255.99f * col.r());
 					int ig = (int)(255.99f * col.g());
@@ -55,14 +61,24 @@ namespace Raytracer
 			// see if an object is hit
 			if (world.hit(r, 0.0f, float.MaxValue, ref rec)) {
 				// shade the indicated point
-				return (new Vector3 (rec.normal.x () + 1.0f, rec.normal.y () + 1.0f, rec.normal.z () + 1.0f)) * 0.5f;
+				Vector3 target = rec.normal + random_in_unit_sphere ();
+				return 0.5f * color(new Ray(rec.p, target), world);
 			} else {
 				// no object hit, draw the background
 				Vector3 unit_dir = r.direction().unit_vector();
 				float t = 0.5f * (unit_dir.y () + 1.0f);
 				return (new Vector3 (1.0f, 1.0f, 1.0f)) * (1.0f - t) + (new Vector3 (0.5f, 0.7f, 1.0f) * t);
-			
 			}
+		}
+
+		static Vector3 random_in_unit_sphere() {
+			Vector3 p = new Vector3 ();
+			do {
+				p = (2.0f * (new Vector3((float)rnd.NextDouble(), (float)rnd.NextDouble(), (float)rnd.NextDouble())))
+					- (new Vector3(1.0f, 1.0f, 1.0f));
+			} while(Vector3.dot(p,p) >= 1.0f);
+			p = p.unit_vector ();
+			return p;
 		}
 	}
 }

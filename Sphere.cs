@@ -26,7 +26,7 @@ namespace Raytracer
 
 			if (discriminant > 0) {
 				// update the hit_record to pass the information back to the calling object
-				float temp = (-b - (float)Math.Sqrt (b * b - a * c)) / a; // check the roots
+				float temp = (-b - (float)Math.Sqrt (b * b - 4 * a * c)) / (2 * a); // check the roots
 				if (temp < t_max && temp > t_min) {
 					rec.t = temp;
 					rec.p = r.point (rec.t);
@@ -34,7 +34,7 @@ namespace Raytracer
 					return true;
 				}
 
-				temp = (-b + (float)Math.Sqrt (b * b - a * c)) / a;
+				temp = (-b + (float)Math.Sqrt (b * b - 4 * a * c)) / (2 * a);
 				if (temp < t_max && temp > t_min) {
 					rec.t = temp;
 					rec.p = r.point (rec.t);

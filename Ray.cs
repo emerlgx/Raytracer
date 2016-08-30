@@ -27,7 +27,7 @@ namespace Raytracer
 		}
 
 		public Vector3 point(float t) {
-			return (A + B*t);
+			return (A + t*B);
 		}
 	}
 }

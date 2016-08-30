@@ -16,11 +16,11 @@ namespace Raytracer
 		public override bool hit(Ray r, float t_min, float t_max, ref hit_record rec) {
 			hit_record temp_rec = new hit_record();
 			bool hit_anything = false;
-			double closest = t_max;
+			float closest = t_max;
 
 			for (int i = 0; i < hitables.Count; i++) {
 				//cycle through all hitables and return the hit closest to the camera
-				if (((Hitable)hitables [i]).hit (r, t_min, (float)closest, ref temp_rec)) {
+				if (((Hitable)hitables [i]).hit (r, t_min, closest, ref temp_rec)) {
 					hit_anything = true;
 					closest = temp_rec.t;
 					rec = temp_rec;

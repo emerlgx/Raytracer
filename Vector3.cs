@@ -44,6 +44,10 @@ namespace Raytracer
 			return new Vector3 (a.x() * f, a.y() * f, a.z() * f);
 		}
 
+		public static Vector3 operator *(float f, Vector3 a) {
+			return new Vector3 (a.x() * f, a.y() * f, a.z() * f);
+		}
+
 		public static Vector3 operator /(Vector3 a, Vector3 b) {
 			return new Vector3 (a.x() / b.x(), a.y() / b.y(), a.z() / b.z());
 		}
@@ -53,17 +57,17 @@ namespace Raytracer
 		}
 
 		public float length () {
-			return (float)Math.Sqrt (e[0]*e[0] + e[1]*e[1] + e[2]*e[2]);
+			return (float)Math.Sqrt (x()*x() + y()*y() + z()*z());
 		}
 
 		public float squared_length() {
-			return (e[0]*e[0] + e[1]*e[1] + e[2]*e[2]);
+			return (x()*x() + y()*y() + z()*z());
 		}
 
 		public Vector3 unit_vector() {
-			return new Vector3(this.x() / length (),
-			                   this.y() / length (),
-			                   this.z() / length ());
+			return new Vector3(x() / length (),
+			                   y() / length (),
+			                   z() / length ());
 		}
 
 		// other operations
