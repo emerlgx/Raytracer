@@ -27,8 +27,8 @@ namespace Raytracer
 		}
 
 		public override bool scatter(Ray r_in, hit_record rec, ref Vector3 attenuation, ref Ray scattered) {
-			Vector3 reflected = MainClass.reflect (r_in.direction().unit_vector(), rec.normal);
-			scattered = new Ray (rec.p, reflected + fuzz*MainClass.random_in_unit_sphere());
+			Vector3 reflected = Utils.reflect (r_in.direction().unit_vector(), rec.normal);
+			scattered = new Ray (rec.p, reflected + fuzz*Utils.random_in_unit_sphere());
 			attenuation = abledo;
 			return (Vector3.dot (scattered.direction (), rec.normal) > 0.0f);
 		}
