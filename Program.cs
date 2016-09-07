@@ -18,8 +18,18 @@ namespace Raytracer
 
 			// create the world
 			Hitable_List world = new Hitable_List ();
-			world.hitables.Add (new Sphere (new Vector3 (0.0f, -100.5f, -1.0f), 100.0f));
-			world.hitables.Add (new Sphere (new Vector3 (0.0f, 0.0f, -1.0f), 0.5f));
+			world.hitables.Add (new Sphere (new Vector3 (0.0f, 0.0f, -1.0f),
+			                                0.5f,
+			                                new Lambertian (new Vector3 (0.8f, 0.3f, 0.3f))));
+			world.hitables.Add (new Sphere (new Vector3 (0.0f, -100.5f, -1.0f),
+			                                100.0f,
+			                                new Lambertian (new Vector3 (0.8f, 0.8f, 0.0f))));
+			world.hitables.Add (new Sphere (new Vector3 (1.0f, 0.0f, -1.0f),
+			                                0.5f,
+			                                new Metal (new Vector3 (0.8f, 0.6f, 0.2f), 0.3f)));
+			world.hitables.Add (new Sphere (new Vector3 (-1.0f, 0.0f, -1.0f),
+			                                0.5f,
+			                                new Metal (new Vector3 (0.8f, 0.8f, 0.8f), 1.0f)));
 
 
 			// init the camera
@@ -37,7 +47,7 @@ namespace Raytracer
 						float v = (float)(i + rnd.NextDouble()) / (float)ny;
 						
 						Ray r = cam.getRay(u,v);
-						col += color (r, world);
+						col += color (r, world, 0);
 					}
 
 					col /= (float)ns;
@@ -55,14 +65,20 @@ namespace Raytracer
 		}
 
 		// if no object is hit, draw a gradient
-		static Vector3 color(Ray r, Hitable world) {
+		static Vector3 color(Ray r, Hitable world, int depth) {
 			hit_record rec = new hit_record();
 
 			// see if an object is hit
-			if (world.hit(r, 0.0f, float.MaxValue, ref rec)) {
+			if (world.hit(r, 0.001f, float.MaxValue, ref rec)) {
 				// shade the indicated point
-				Vector3 target = rec.normal + random_in_unit_sphere ();
-				return 0.5f * color(new Ray(rec.p, target), world);
+				Ray scattered = new Ray();
+				Vector3 attenuation = new Vector3();
+				if (depth < 50 && rec.mat.scatter (r, rec, ref attenuation, ref scattered)) {
+					return attenuation * color (scattered, world, depth + 1);
+				} else {
+					// reached our max depth, don't render any further
+					return new Vector3 ();
+				}
 			} else {
 				// no object hit, draw the background
 				Vector3 unit_dir = r.direction().unit_vector();
@@ -71,7 +87,7 @@ namespace Raytracer
 			}
 		}
 
-		static Vector3 random_in_unit_sphere() {
+		public static Vector3 random_in_unit_sphere() {
 			Vector3 p = new Vector3 ();
 			do {
 				p = (2.0f * (new Vector3((float)rnd.NextDouble(), (float)rnd.NextDouble(), (float)rnd.NextDouble())))
@@ -79,6 +95,10 @@ namespace Raytracer
 			} while(Vector3.dot(p,p) >= 1.0f);
 			p = p.unit_vector ();
 			return p;
+		}
+
+		public static Vector3 reflect(Vector3 v, Vector3 n) {
+			return v - 2.0f * Vector3.dot (v, n) * n;
 		}
 	}
 }

@@ -6,15 +6,18 @@ namespace Raytracer
 	{
 		Vector3 center;
 		float radius;
+		Material material;
 
 		public Sphere () {
 			center = new Vector3 ();
 			radius = 0.0f;
+			material = new Lambertian (new Vector3 ());
 		}
 
-		public Sphere(Vector3 cen, float r) {
+		public Sphere(Vector3 cen, float r, Material mat) {
 			center = cen;
 			radius = r;
+			material = mat;
 		}
 
 		public override bool hit(Ray r, float t_min, float t_max, ref hit_record rec) {
@@ -31,6 +34,7 @@ namespace Raytracer
 					rec.t = temp;
 					rec.p = r.point (rec.t);
 					rec.normal = (rec.p - center) / radius;
+					rec.mat = material;
 					return true;
 				}
 
@@ -39,6 +43,7 @@ namespace Raytracer
 					rec.t = temp;
 					rec.p = r.point (rec.t);
 					rec.normal = (rec.p - center) / radius;
+					rec.mat = material;
 					return true;
 				}
 			}
