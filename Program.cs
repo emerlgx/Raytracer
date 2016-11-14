@@ -35,7 +35,11 @@ namespace Raytracer
 
 
 			// init the camera
-			Camera cam = new Camera ();
+			Camera cam = new Camera (new Vector3 (-2.0f, 2.0f, 1.0f),
+				             new Vector3 (0.0f, 0.0f, -1.0f),
+				             new Vector3 (0.0f, 1.0f, 0.0f),
+				             90.0f,
+				             (float)nx / (float)ny);
 
 			for (int i = ny-1; i >= 0; i--) {
 				for (int j = 0; j < nx; j++) {

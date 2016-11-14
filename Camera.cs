@@ -17,11 +17,19 @@ namespace Raytracer
 			origin = new Vector3 (0.0f, 0.0f, 0.0f);
 		}
 
-		public Camera (Vector3 ll, Vector3 h, Vector3 v, Vector3 o) {
-			lower_left = ll;
-			horizontal = h;
-			vertical = v;
-			origin = o;
+		public Camera (Vector3 lookfrom, Vector3 lookat, Vector3 vup, float vfov, float aspect) {
+			Vector3 u, v, w;
+			float theta = vfov * (float)Math.PI / 180.0f;
+			float half_height = (float)Math.Tan (theta / 2.0f);
+			float half_width = half_height * aspect;
+			origin = lookfrom;
+			w = (lookfrom - lookat).unit_vector ();
+			u = Vector3.cross (vup, w).unit_vector ();
+			v = Vector3.cross (w, u);
+			lower_left = origin - half_width*u - half_height*v - w;
+			horizontal = 2.0f * half_width * u;
+			vertical = 2.0f * half_height * v;
+
 		}
 
 		public Ray getRay(float u, float v) {
