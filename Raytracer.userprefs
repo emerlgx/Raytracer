@@ -1,11 +1,8 @@
-﻿<Properties>
+﻿<Properties StartupItem="Raytracer.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Vector3.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Materials/Dielectric.cs">
     <Files>
-      <File FileName="Program.cs" Line="1" Column="1" />
-      <File FileName="Sphere.cs" Line="1" Column="1" />
-      <File FileName="Hitable.cs" Line="1" Column="1" />
-      <File FileName="Vector3.cs" Line="57" Column="4" />
+      <File FileName="Materials/Dielectric.cs" Line="11" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -23,6 +23,29 @@ namespace Raytracer
 		public static Vector3 reflect(Vector3 v, Vector3 n) {
 			return v - 2.0f * Vector3.dot (v, n) * n;
 		}
+
+		public static bool refract (Vector3 v, Vector3 n, float ni_over_nt, ref Vector3 refracted) {
+			Vector3 uv = v.unit_vector ();
+			Vector3 un = n.unit_vector ();
+			float dt = Vector3.dot (uv, un);
+			float discriminant = 1.0f - ni_over_nt * ni_over_nt * (1.0f - dt * dt);
+
+			// decide whether to reflect or refract
+			if (discriminant > 0.0f) {
+				refracted = ni_over_nt * (uv - un * dt) - un * (float)Math.Sqrt (discriminant);
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		// used for approximating glass reflectivity
+		public static float schlick(float cosine, float ref_index) {
+			float r0 = (1.0f - ref_index) / (1.0f + ref_index);
+			r0 = r0 * r0;
+			return r0 + (1.0f - r0) * (float)Math.Pow ((1.0f - cosine), 5.0f);
+		}
+
 	}
 }
 

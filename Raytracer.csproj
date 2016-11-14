@@ -46,6 +46,7 @@
     <Compile Include="Materials\Lambertian.cs" />
     <Compile Include="Materials\Metal.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="Materials\Dielectric.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
