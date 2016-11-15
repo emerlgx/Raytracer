@@ -1,6 +1,6 @@
 Raytracer
 
-![Example Image](example.ppm?raw=true "Example Image")
+![Example Image](example1.ppm?raw=true "Example Image")
 
 A raytracer written in C#. Includes matte, metal, and dielectric(glass) materials.
 
