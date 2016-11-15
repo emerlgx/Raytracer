@@ -17,8 +17,11 @@ namespace Raytracer
 
 			// create the world
 			Hitable_List world = new Hitable_List ();
-			world.hitables.Add (new Sphere (new Vector3 (0.0f, 0.0f, -1.0f),
-			                                0.5f,
+			world.hitables.Add (new Moving_Sphere (new Vector3 (0.0f, 0.0f, 0.0f),
+											new Vector3 (0.0f, 0.0f, -3.0f),
+											0.0f,
+											10.0f,
+											0.5f,
 			                                new Lambertian (new Vector3 (0.8f, 0.3f, 0.3f))));
 			world.hitables.Add (new Sphere (new Vector3 (1.0f, 0.0f, -1.0f),
 			                                0.5f,
@@ -45,7 +48,9 @@ namespace Raytracer
 				             20.0f,
 				             (float)nx / (float)ny,
 				             apeture,
-				             dist_to_focus);
+				             dist_to_focus,
+				             0.0f,
+				             10.0f);
 
 			for (int i = ny-1; i >= 0; i--) {
 				for (int j = 0; j < nx; j++) {
