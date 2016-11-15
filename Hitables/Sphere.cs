@@ -49,6 +49,12 @@ namespace Raytracer
 			}
 			return false;
 		}
+
+		public override bool bounding_box(float t0, float t1, ref AABB box) {
+			box = new AABB (center - new Vector3 (radius, radius, radius),
+							center + new Vector3 (radius, radius, radius));
+			return true;
+		}
 	}
 }
 

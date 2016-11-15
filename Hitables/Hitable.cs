@@ -14,6 +14,10 @@ namespace Raytracer
 		public virtual bool hit(Ray r, float t_min, float t_max, ref hit_record rec) {
 			return false;
 		}
+
+		public virtual bool bounding_box(float t0, float t1, ref AABB box) {
+			return false;
+		}
 	}
 }
 

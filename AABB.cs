@@ -14,6 +14,14 @@ namespace Raytracer
 			_max = b;
 		}
 
+		public Vector3 min() {
+			return _min;
+		}
+
+		public Vector3 max() {
+			return _max;
+		}
+
 		public bool hit (Ray r, float tmin, float tmax) {
 			float t0 = Utils.fmin ((_min.x () - r.origin ().x ()) / r.direction ().x (),
 				           (_max.x () - r.origin ().x ()) / r.direction ().x ());
@@ -52,6 +60,16 @@ namespace Raytracer
 			}
 
 			return true;
+		}
+
+		public static AABB surrounding_box(AABB box0, AABB box1) {
+			Vector3 small = new Vector3 (Utils.fmin (box0.min ().x (), box1.min ().x ()),
+				                Utils.fmin (box0.min ().y (), box1.min ().y ()),
+				                Utils.fmin (box0.min ().z (), box1.min ().z ()));
+			Vector3 large = new Vector3 (Utils.fmax (box0.max ().x (), box1.max ().x ()),
+				                Utils.fmax (box0.max ().y (), box1.max ().y ()),
+				                Utils.fmax (box0.max ().z (), box1.max ().z ()));
+			return new AABB (small, large);
 		}
 	}
 }
