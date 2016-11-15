@@ -26,9 +26,9 @@ namespace Raytracer
 			float half_width = half_height * aspect;
 			origin = lookfrom;
 			w = (lookfrom - lookat).unit_vector ();
-			u = Vector3.cross (vup, w).unit_vector ();
+			u = (Vector3.cross (vup, w)).unit_vector ();
 			v = Vector3.cross (w, u);
-			lower_left = origin - half_width * u - half_height * v - focus_dist * w;
+			lower_left = origin - half_width * focus_dist * u - half_height * focus_dist * v - focus_dist * w;
 			horizontal = 2.0f * half_width * focus_dist * u;
 			vertical = 2.0f * half_height * focus_dist * v;
 
@@ -36,8 +36,8 @@ namespace Raytracer
 
 		public Ray getRay(float s, float t) {
 			Vector3 rd = lens_radius * Utils.random_in_unit_disk ();
-			Vector3 offset = u * rd.x () * v * rd.y ();
-			return new Ray (origin + offset, lower_left + horizontal * s + vertical * t - origin - offset);
+			Vector3 offset = u * rd.x () + v * rd.y ();
+			return new Ray (origin + offset, lower_left + s * horizontal + t * vertical - origin - offset);
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace Raytracer
 			Vector3 outward_norm;
 			Vector3 reflected = Utils.reflect (r_in.direction (), rec.normal);
 			float ni_over_nt;
-			attenuation = new Vector3 (1.0f, 1.0f, 0.0f);
+			attenuation = new Vector3 (1.0f, 1.0f, 1.0f);
 			Vector3 refracted = new Vector3();
 			float reflect_prob = 0.0f;
 			float cosine = 0.0f;

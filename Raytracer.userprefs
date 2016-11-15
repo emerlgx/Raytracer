@@ -1,8 +1,10 @@
 ﻿<Properties StartupItem="Raytracer.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Materials/Dielectric.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
     <Files>
-      <File FileName="Materials/Dielectric.cs" Line="11" Column="22" />
+      <File FileName="Camera.cs" Line="40" Column="10" />
+      <File FileName="Program.cs" Line="45" Column="19" />
+      <File FileName="Utils.cs" Line="26" Column="28" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
