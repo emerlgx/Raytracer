@@ -10,6 +10,22 @@ namespace Raytracer
 			rnd = new Random();
 		}
 
+		public static float fmin (float a, float b) {
+			if (a > b) {
+				return b;
+			} else {
+				return a;
+			}
+		}
+
+		public static float fmax (float a, float b) {
+			if (a < b) {
+				return b;
+			} else {
+				return a;
+			}
+		}
+
 		public static Vector3 random_in_unit_sphere() {
 			Vector3 p = new Vector3 ();
 			do {

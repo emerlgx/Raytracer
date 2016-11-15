@@ -48,6 +48,7 @@
     <Compile Include="Hitables\Hitable_List.cs" />
     <Compile Include="Hitables\Sphere.cs" />
     <Compile Include="Hitables\Moving_Sphere.cs" />
+    <Compile Include="AABB.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
