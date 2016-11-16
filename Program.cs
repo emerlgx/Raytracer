@@ -23,7 +23,7 @@ namespace Raytracer
 											0.0f,
 											10.0f,
 											0.5f,
-			                                new Lambertian (new Vector3 (0.8f, 0.3f, 0.3f))));
+											new Lambertian (new Const_Texture (new Vector3 (0.8f, 0.3f, 0.3f)))));
 			world.Add (new Sphere (new Vector3 (1.0f, 0.0f, -1.0f),
 			                                0.5f,
 			                                new Dielectric (1.5f)));
@@ -32,10 +32,10 @@ namespace Raytracer
 											new Dielectric (1.5f)));
 			world.Add (new Sphere (new Vector3 (-1.0f, 0.0f, -1.0f),
 			                                0.5f,
-			                                new Metal (new Vector3 (0.8f, 0.8f, 0.8f), 1.0f)));
+											new Metal (new Const_Texture(new Vector3 (0.8f, 0.8f, 0.8f)), 1.0f)));
 			world.Add (new Sphere (new Vector3 (0.0f, -100.5f, -1.0f),
 											100.0f,
-											new Lambertian (new Vector3 (0.8f, 0.8f, 0.0f))));
+											new Lambertian (new Checker())));
 			
 			BVH_Node tree = new BVH_Node (world, 0.0f, 10.0f);
 
@@ -43,7 +43,7 @@ namespace Raytracer
 			Vector3 lookfrom = new Vector3 (3.0f, 3.0f, 2.0f);
 			Vector3 lookat = new Vector3 (0.0f, 0.0f, -1.0f);
 			float dist_to_focus = (lookfrom - lookat).length ();
-			float apeture = 2.0f;
+			float apeture = 0.2f;
 			Camera cam = new Camera (lookfrom,
 				             lookat,
 				             new Vector3 (0.0f, 1.0f, 0.0f),
