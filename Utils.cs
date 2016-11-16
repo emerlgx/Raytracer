@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace Raytracer
 {
@@ -69,6 +70,46 @@ namespace Raytracer
 			float r0 = (1.0f - ref_index) / (1.0f + ref_index);
 			r0 = r0 * r0;
 			return r0 + (1.0f - r0) * (float)Math.Pow ((1.0f - cosine), 5.0f);
+		}
+
+		// used for comparing bounding boxes of two hitables
+		public static int hitable_box_compare_x (Hitable a, Hitable b) {
+			AABB box_left = new AABB ();
+			AABB box_right = new AABB();
+			if (!a.bounding_box (0.0f, 0.0f, ref box_left) || !b.bounding_box (0.0f, 0.0f, ref box_right)) {
+				Console.Error.WriteLine ("No possible bounding box during x comparison");
+			}
+			if (box_left.min ().x () - box_right.min ().x () < 0.0f) {
+				return -1;
+			} else {
+				return 1;
+			}
+		}
+
+		public static int hitable_box_compare_y (Hitable a, Hitable b) {
+			AABB box_left = new AABB ();
+			AABB box_right = new AABB();
+			if (!a.bounding_box (0.0f, 0.0f, ref box_left) || !b.bounding_box (0.0f, 0.0f, ref box_right)) {
+				Console.Error.WriteLine ("No possible bounding box during x comparison");
+			}
+			if (box_left.min ().y () - box_right.min ().y () < 0.0f) {
+				return -1;
+			} else {
+				return 1;
+			}
+		}
+
+		public static int hitable_box_compare_z (Hitable a, Hitable b) {
+			AABB box_left = new AABB ();
+			AABB box_right = new AABB();
+			if (!a.bounding_box (0.0f, 0.0f, ref box_left) || !b.bounding_box (0.0f, 0.0f, ref box_right)) {
+				Console.Error.WriteLine ("No possible bounding box during x comparison");
+			}
+			if (box_left.min ().z () - box_right.min ().z () < 0.0f) {
+				return -1;
+			} else {
+				return 1;
+			}
 		}
 
 	}

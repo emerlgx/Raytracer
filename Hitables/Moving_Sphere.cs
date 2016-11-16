@@ -53,9 +53,9 @@ namespace Raytracer
 
 		public override bool bounding_box(float t0, float t1, ref AABB box) {
 			AABB box0 = new AABB (center(t0) - new Vector3 (radius, radius, radius),
-				center + new Vector3 (radius, radius, radius));
+				center(t0) + new Vector3 (radius, radius, radius));
 			AABB box1 = new AABB (center(t1) - new Vector3 (radius, radius, radius),
-				center + new Vector3 (radius, radius, radius));
+				center(t1) + new Vector3 (radius, radius, radius));
 			box = AABB.surrounding_box (box0, box1);
 
 			return true;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 // code adapted from "Ray Tracing in One Weekend" by Peter Shirley
@@ -6,8 +7,8 @@ namespace Raytracer
 {
 	class MainClass
 	{
-		static int nx = 800;
-		static int ny = 400;
+		static int nx = 200;
+		static int ny = 100;
 		static int ns = 100;
 
 		public static void Main (string[] args)
@@ -16,26 +17,27 @@ namespace Raytracer
 			Console.Write("P3\n" + nx + " " + ny + " " + "\n255\n");
 
 			// create the world
-			Hitable_List world = new Hitable_List ();
-			world.hitables.Add (new Moving_Sphere (new Vector3 (0.0f, 0.0f, 0.0f),
+			List<Hitable> world = new List<Hitable>();
+			world.Add (new Moving_Sphere (new Vector3 (0.0f, 0.0f, 0.0f),
 											new Vector3 (0.0f, 0.0f, -3.0f),
 											0.0f,
 											10.0f,
 											0.5f,
 			                                new Lambertian (new Vector3 (0.8f, 0.3f, 0.3f))));
-			world.hitables.Add (new Sphere (new Vector3 (1.0f, 0.0f, -1.0f),
+			world.Add (new Sphere (new Vector3 (1.0f, 0.0f, -1.0f),
 			                                0.5f,
 			                                new Dielectric (1.5f)));
-			world.hitables.Add (new Sphere (new Vector3 (1.0f, 0.0f, -1.0f),
+			world.Add (new Sphere (new Vector3 (1.0f, 0.0f, -1.0f),
 											-0.3f,
 											new Dielectric (1.5f)));
-			world.hitables.Add (new Sphere (new Vector3 (-1.0f, 0.0f, -1.0f),
+			world.Add (new Sphere (new Vector3 (-1.0f, 0.0f, -1.0f),
 			                                0.5f,
 			                                new Metal (new Vector3 (0.8f, 0.8f, 0.8f), 1.0f)));
-			world.hitables.Add (new Sphere (new Vector3 (0.0f, -100.5f, -1.0f),
+			world.Add (new Sphere (new Vector3 (0.0f, -100.5f, -1.0f),
 											100.0f,
 											new Lambertian (new Vector3 (0.8f, 0.8f, 0.0f))));
-
+			
+			BVH_Node tree = new BVH_Node (world, 0.0f, 10.0f);
 
 			// init the camera
 			Vector3 lookfrom = new Vector3 (3.0f, 3.0f, 2.0f);
@@ -60,9 +62,9 @@ namespace Raytracer
 					for (int s = 0; s < ns; s++) {
 						float u = (float)(j + Utils.rnd.NextDouble()) / (float)nx;
 						float v = (float)(i + Utils.rnd.NextDouble()) / (float)ny;
-						
+
 						Ray r = cam.getRay(u,v);
-						col += color (r, world, 0);
+						col += color (r, tree, 0);
 					}
 
 					col /= (float)ns;

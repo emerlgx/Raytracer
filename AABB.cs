@@ -7,7 +7,10 @@ namespace Raytracer
 		Vector3 _min;
 		Vector3 _max;
 
-		public AABB () {}
+		public AABB () {
+			_min = new Vector3 (0.0f, 0.0f, 0.0f);
+			_max = new Vector3 (0.0f, 0.0f, 0.0f);
+		}
 
 		public AABB (Vector3 a, Vector3 b) {
 			_min = a;
