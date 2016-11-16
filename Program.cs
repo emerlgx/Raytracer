@@ -32,10 +32,10 @@ namespace Raytracer
 											new Dielectric (1.5f)));
 			world.Add (new Sphere (new Vector3 (-1.0f, 0.0f, -1.0f),
 			                                0.5f,
-											new Metal (new Const_Texture(new Vector3 (0.8f, 0.8f, 0.8f)), 1.0f)));
+											new Metal (new Noise(new Vector3 (0.8f, 0.8f, 0.8f)), 1.0f)));
 			world.Add (new Sphere (new Vector3 (0.0f, -100.5f, -1.0f),
 											100.0f,
-											new Lambertian (new Checker())));
+											new Lambertian (new Noise())));
 			
 			BVH_Node tree = new BVH_Node (world, 0.0f, 10.0f);
 
