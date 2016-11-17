@@ -4,16 +4,16 @@ namespace Raytracer
 {
 	public class Metal : Material
 	{
-		public Vector3 abledo;
+		public Texture abledo;
 		public float fuzz;
 
-		public Metal (Vector3 a)
+		public Metal (Texture a)
 		{
 			abledo = a;
 			fuzz = 0.0f;
 		}
 
-		public Metal (Vector3 a, float f)
+		public Metal (Texture a, float f)
 		{
 			abledo = a;
 
@@ -29,7 +29,7 @@ namespace Raytracer
 		public override bool scatter(Ray r_in, hit_record rec, ref Vector3 attenuation, ref Ray scattered) {
 			Vector3 reflected = Utils.reflect (r_in.direction().unit_vector(), rec.normal);
 			scattered = new Ray (rec.p, reflected + fuzz*Utils.random_in_unit_sphere());
-			attenuation = abledo;
+			attenuation = abledo.value (0.0f, 0.0f, ref rec.p);
 			return (Vector3.dot (scattered.direction (), rec.normal) > 0.0f);
 		}
 

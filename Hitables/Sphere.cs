@@ -11,7 +11,7 @@ namespace Raytracer
 		public Sphere () {
 			center = new Vector3 ();
 			radius = 0.0f;
-			material = new Lambertian (new Vector3 ());
+			material = new Lambertian (new Const_Texture());
 		}
 
 		public Sphere(Vector3 cen, float r, Material mat) {
