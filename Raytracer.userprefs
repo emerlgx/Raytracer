@@ -1,13 +1,12 @@
 ﻿<Properties StartupItem="Raytracer.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Hitables/BVH_Node.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Utils.cs">
     <Files>
-      <File FileName="AABB.cs" Line="1" Column="1" />
-      <File FileName="Hitables/Hitable.cs" Line="1" Column="1" />
-      <File FileName="Hitables/BVH_Node.cs" Line="41" Column="67" />
-      <File FileName="Program.cs" Line="25" Column="17" />
-      <File FileName="Utils.cs" Line="1" Column="1" />
-      <File FileName="Camera.cs" Line="1" Column="1" />
+      <File FileName="Textures/Texture.cs" Line="7" Column="3" />
+      <File FileName="Perlin.cs" Line="17" Column="4" />
+      <File FileName="Textures/Noise.cs" Line="22" Column="19" />
+      <File FileName="Program.cs" Line="29" Column="60" />
+      <File FileName="Utils.cs" Line="114" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

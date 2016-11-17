@@ -112,6 +112,24 @@ namespace Raytracer
 			}
 		}
 
+		public static float trilinear_interpolation(Vector3[,,] c, float u, float v, float w) {
+			float accum = 0.0f;
+			float uu = u * u * (3 - 2 * u);
+			float vv = v * v * (3 - 2 * v);
+			float ww = w * w * (3 - 2 * w);
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 2; j++) {
+					for (int k = 0; k < 2; k++) {
+						Vector3 weight = new Vector3 (u - i, v - j, w - k);
+						accum += (i * uu + (1.0f - i) * (1.0f - uu)) *
+						(j * vv + (1.0f - j) * (1.0f - vv)) *
+						(k * ww + (1.0f - k) * (1.0f - ww)) *
+						Vector3.dot(c [i, j, k], weight);
+					}
+				}
+			}
+			return accum;
+		}
 	}
 }
 
