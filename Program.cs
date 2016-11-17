@@ -7,8 +7,8 @@ namespace Raytracer
 {
 	class MainClass
 	{
-		static int nx = 200;
-		static int ny = 100;
+		static int nx = 800;
+		static int ny = 400;
 		static int ns = 100;
 
 		public static void Main (string[] args)
@@ -19,11 +19,11 @@ namespace Raytracer
 			// create the world
 			List<Hitable> world = new List<Hitable>();
 			world.Add (new Moving_Sphere (new Vector3 (0.0f, 0.0f, 0.0f),
-											new Vector3 (0.0f, 0.0f, -3.0f),
+											new Vector3 (0.0f, 0.0f, -2.0f),
 											0.0f,
 											10.0f,
 											0.5f,
-											new Lambertian (new Const_Texture (new Vector3 (0.8f, 0.3f, 0.3f)))));
+											new Lambertian (new Const_Texture (new Vector3 (0.137f, 0.467f, 1.0f)))));
 			world.Add (new Sphere (new Vector3 (1.0f, 0.0f, -1.0f),
 			                                0.5f,
 			                                new Dielectric (1.5f)));
@@ -32,18 +32,18 @@ namespace Raytracer
 											new Dielectric (1.5f)));
 			world.Add (new Sphere (new Vector3 (-1.0f, 0.0f, -1.0f),
 			                                0.5f,
-											new Metal (new Noise(new Vector3 (0.8f, 0.8f, 0.8f)), 1.0f)));
+											new Metal (new Noise(10.0f))));
 			world.Add (new Sphere (new Vector3 (0.0f, -100.5f, -1.0f),
 											100.0f,
-											new Lambertian (new Noise(10.0f))));
+											new Lambertian (new Marble(new Vector3(0.0f,0.8f,0.0f),5.0f))));
 			
 			BVH_Node tree = new BVH_Node (world, 0.0f, 10.0f);
 
 			// init the camera
-			Vector3 lookfrom = new Vector3 (3.0f, 3.0f, 2.0f);
+			Vector3 lookfrom = new Vector3 (3.0f, 2.0f, 2.0f);
 			Vector3 lookat = new Vector3 (0.0f, 0.0f, -1.0f);
 			float dist_to_focus = (lookfrom - lookat).length ();
-			float apeture = 0.0f;
+			float apeture = 0.5f;
 			Camera cam = new Camera (lookfrom,
 				             lookat,
 				             new Vector3 (0.0f, 1.0f, 0.0f),

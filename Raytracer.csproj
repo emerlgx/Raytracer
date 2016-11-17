@@ -56,6 +56,8 @@
     <Compile Include="Textures\Checker.cs" />
     <Compile Include="Perlin.cs" />
     <Compile Include="Textures\Noise.cs" />
+    <Compile Include="Textures\Camo.cs" />
+    <Compile Include="Textures\Marble.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -69,6 +69,19 @@ namespace Raytracer
 			}
 			return permute (p);
 		}
+
+		public float turb(Vector3 p, int depth=7) {
+			float accum = 0.0f;
+			float weight = 1.0f;
+			for (int i = 0; i < depth; i++) {
+				accum += weight * noise (p);
+				weight *= 0.5f;
+				p *= 2.0f;
+			}
+			accum = Math.Abs (accum);
+			return accum;
+
+		}
 	}
 }
 
